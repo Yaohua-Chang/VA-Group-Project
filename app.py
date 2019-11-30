@@ -17,6 +17,10 @@ server = app.server
 df = pd.read_csv('data/Cleaned10_23.csv')
 df["s_BMI"] = df["s_weight"] / (df["s_height"] / 100)**2
 
+#the combination index generated from eating behaviors
+df['com']=df['s_q8_1']+df['s_q8_2']-df['s_q7_1']-df['s_q7_3']  
+                                                               
+
 map_gender = {1: "male", 2: "female"}
 df["gender"] = df["gender"].map(map_gender)
 
@@ -31,6 +35,9 @@ traces_months = []
 for month in df.month_birth.unique():
     traces_months.append(go.Box(y=df[df["month_birth"] == month]["s_BMI"],name=month, marker={"size": 2}, boxpoints='all'))
 
+traces_com = [] 
+for com in df.com.unique():
+    traces_com.append(go.Violin(x=df['com'][df['com'] == com], y=df[df["com"] == com]["s_BMI"],name=str(com)))
 
 app.layout = html.Div([html.Div([
         html.H1("The Study for Obesity of Students in Turkey")], style={"textAlign": "center"}),
@@ -39,7 +46,7 @@ app.layout = html.Div([html.Div([
             figure={
                 "data": traces_gender,
                 "layout": go.Layout(title=f"BMI VS. Gender",autosize=True,
-                                margin={"l": 200, "b": 100, "r": 200},xaxis={"showticklabels": True,},
+                                margin={"l": 200, "b": 100, "r": 200},xaxis={"showticklabels": True},
                                 yaxis={"title": "BMI"})}
         ),
         dcc.Graph(
@@ -47,7 +54,18 @@ app.layout = html.Div([html.Div([
             figure={
                 "data": traces_months,
                 "layout": go.Layout(title=f"BMI VS. Month",autosize=True,
-                                margin={"l": 200, "b": 100, "r": 200},xaxis={"showticklabels": True,},
+                                margin={"l": 200, "b": 100, "r": 200},xaxis={"showticklabels": True},
+                                yaxis={"title": "BMI"})}
+        ),
+        dcc.Graph(
+            id="com-graph",
+            figure={
+                "data": traces_com,
+                "layout": go.Layout(title=f"BMI VS. Eating Behaviors",
+                                autosize=True,
+                                showlegend=False,
+                                margin={"l": 200, "b": 100, "r": 200},
+                                xaxis={"title": "vegetable & fruit  <----------------->  beverage & chips"},
                                 yaxis={"title": "BMI"})}
         )
 ], className="container")
