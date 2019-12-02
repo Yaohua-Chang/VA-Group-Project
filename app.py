@@ -14,8 +14,7 @@ app = dash.Dash(
 server = app.server
 
 # Load data
-df = pd.read_csv('data/Cleaned10_23.csv')
-df["s_BMI"] = df["s_weight"] / (df["s_height"] / 100)**2
+df = pd.read_csv('data/Data_vis_P.csv')
 
 #the combination index generated from eating behaviors
 df['com']=df['s_q8_1']+df['s_q8_2']-df['s_q7_1']-df['s_q7_3']  
