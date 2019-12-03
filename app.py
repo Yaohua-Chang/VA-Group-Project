@@ -110,6 +110,10 @@ app.layout = html.Div([html.Div([
                                 xaxis={"title": "Percentage of BMI per Incone Level(%)","showticklabels": True},
                                 yaxis={"title": "Monthly Income"})}
         ),
+        html.Img(
+            id="parents-graph",
+            src="assets/Picture1.png"
+            )
 ], className="container")
 
 
