@@ -71,8 +71,7 @@ for idex, row in df.iterrows():
 df['Mother_BMI'] = motherBmi
 df['Father_BMI'] = fatherBmi
 
-colors = n_colors('rgb(0, 100, 255)', 'rgb(0, 10, 0)', 6, colortype='rgb')
-values = [-1, 0, 1, 2, 3, 4]
+colors = n_colors('rgb(0, 100, 255)', 'rgb(0, 10, 0)', 11, colortype='rgb')
 
 app.layout = html.Div([
         html.Div([
@@ -176,7 +175,7 @@ def update_gender_graph(gender_type, month_type, health_type):
     if health_type != "All Health Status":
         df_select = df_select[df_select["health_status"] == health_type]
 
-    for com, color in zip(values, colors):
+    for com, color in zip(sorted(df_select.com.unique()), colors):
         traces_com.append(go.Violin(x=df_select['com'][df_select['com'] == com], y=df_select[df_select["com"] == com]["s_BMI"],name=str(com), line={"color":color}))
 
     return {
