@@ -163,7 +163,7 @@ app.layout = html.Div([
     [Input('crossfilter-gender', 'value'),
     Input('crossfilter-month', 'value'),
     Input('crossfilter-health', 'value')])
-def update_gender_graph(gender_type, month_type, health_type):
+def update_eating_graph(gender_type, month_type, health_type):
     traces_com = []
     df_select = df
     if gender_type != "All Genders":
